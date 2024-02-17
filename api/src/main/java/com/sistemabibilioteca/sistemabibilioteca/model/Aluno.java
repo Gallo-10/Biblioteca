@@ -26,6 +26,4 @@ public class Aluno {
     private String cpf;
 
     private String endereco;
-
-    //funções que vão ser implementadas - verificarDebito, realizarEmprestimo
 }

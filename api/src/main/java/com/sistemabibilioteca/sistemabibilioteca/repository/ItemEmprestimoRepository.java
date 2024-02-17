@@ -1,6 +1,7 @@
 package com.sistemabibilioteca.sistemabibilioteca.repository;
 
 import com.sistemabibilioteca.sistemabibilioteca.dao.ItemEmprestimoDAO;
+
 import com.sistemabibilioteca.sistemabibilioteca.model.ItemEmprestimo;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -17,12 +18,16 @@ public class ItemEmprestimoRepository implements ItemEmprestimoDAO {
 
     @Override
     public ItemEmprestimo findById(Long id) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM itens_emprestimo a WHERE a.id = :id", ItemEmprestimo.class)
+                            .setParameter("id", id)
+                            .getSingleResult();
     }
 
     @Override
     public ItemEmprestimo findByEmprestimo(Long emprestimoId) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM itens_emprestimo a WHERE a.emprestimoId = :emprestimoId", ItemEmprestimo.class)
+                            .setParameter("emprestimoId", emprestimoId)
+                            .getSingleResult();
     }
 
     @Override

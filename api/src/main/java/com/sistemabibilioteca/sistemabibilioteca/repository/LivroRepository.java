@@ -17,7 +17,9 @@ public class LivroRepository implements LivroDAO {
 
     @Override
     public Livro findById(String id) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM livros a WHERE a.id = :id", Livro.class)
+                            .setParameter("id", id)
+                            .getSingleResult();
     }
 
     @Override

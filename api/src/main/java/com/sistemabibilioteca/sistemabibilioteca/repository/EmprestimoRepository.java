@@ -16,12 +16,16 @@ public class EmprestimoRepository implements EmprestimoDAO {
 
     @Override
     public Emprestimo findById(Long id) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM emprestimos a WHERE a.id = :id", Emprestimo.class)
+                            .setParameter("id", id)
+                            .getSingleResult();
     }
 
     @Override
     public Emprestimo findByAlunoMatricula(String matricula) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM emprestimos a WHERE a.matricula = :matricula", Emprestimo.class)
+                            .setParameter("matricula", matricula)
+                            .getSingleResult();
     }
 
     @Override

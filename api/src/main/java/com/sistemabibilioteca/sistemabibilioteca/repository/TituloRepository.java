@@ -15,12 +15,16 @@ public class TituloRepository implements TituloDAO {
     private EntityManager entityManager;
     @Override
     public Titulo findById(Long id) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM titulos a WHERE a.id = :id", Titulo.class)
+                            .setParameter("id", id)
+                            .getSingleResult();
     }
 
     @Override
     public Titulo findByIsbn(String isbn) {
-        return null;
+        return entityManager.createQuery("SELECT a FROM titulos a WHERE a.isbn = :isbn", Titulo.class)
+                            .setParameter("isbn", isbn)
+                            .getSingleResult();
     }
 
     @Override
