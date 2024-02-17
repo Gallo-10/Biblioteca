@@ -5,9 +5,9 @@ import com.sistemabibilioteca.sistemabibilioteca.model.Titulo;
 import java.util.List;
 
 public interface TituloDAO {
-    Titulo findById(Long id);
-    Titulo findByIsbn(String isbn);
+    Titulo BuscaPorId(Long id);
+    Titulo BuscaPorIsbn(String isbn);
     List<Titulo> findAll();
-    Titulo save(Titulo titulo);
+    Titulo cadastraTitulo(Titulo titulo);
 
 }

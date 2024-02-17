@@ -15,14 +15,14 @@ public class EmprestimoRepository implements EmprestimoDAO {
     private EntityManager entityManager;
 
     @Override
-    public Emprestimo findById(Long id) {
+    public Emprestimo BuscaPorId(Long id) {
         return entityManager.createQuery("SELECT a FROM emprestimos a WHERE a.id = :id", Emprestimo.class)
                             .setParameter("id", id)
                             .getSingleResult();
     }
 
     @Override
-    public Emprestimo findByAlunoMatricula(String matricula) {
+    public Emprestimo BuscaPorAlunoMatricula(String matricula) {
         return entityManager.createQuery("SELECT a FROM emprestimos a WHERE a.matricula = :matricula", Emprestimo.class)
                             .setParameter("matricula", matricula)
                             .getSingleResult();
@@ -35,7 +35,7 @@ public class EmprestimoRepository implements EmprestimoDAO {
 
     @Transactional
     @Override
-    public Emprestimo save(Emprestimo emprestimo) {
+    public Emprestimo cadastraEmprestimo(Emprestimo emprestimo) {
         entityManager.persist(emprestimo);
         return emprestimo;
     }

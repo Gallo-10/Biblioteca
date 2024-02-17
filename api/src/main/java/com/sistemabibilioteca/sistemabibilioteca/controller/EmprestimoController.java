@@ -37,12 +37,12 @@ public class EmprestimoController{
     
     public Emprestimo cadastrarEmprestimo(String matricula, Date dataEmprestimo, List<Livro> livros ) {
         //verifica se o aluno está cadastrado
-        Aluno aluno = alunoRepository.findByMatricula(matricula);
+        Aluno aluno = alunoRepository.BuscaPorMatricula(matricula);
         if (aluno == null) {
             throw new RuntimeException("O aluno não esta cadastrado");
         }
 
-        //verifica se o aluno possui pendências
+        //verifica se o aluno possui debitos
         List<Debito> debitos = debitoController.listarDebitosAluno(matricula);
         if (!debitos.isEmpty()) {
             throw new RuntimeException("O aluno possui débitos pendentes");
@@ -57,7 +57,7 @@ public class EmprestimoController{
         emprestimo.setDevolucao(null);
         emprestimo.setAluno(aluno);
 
-        emprestimoDAO.save(emprestimo);
+        emprestimoDAO.cadastraEmprestimo(emprestimo);
 
         itemEmprestimoController.cadastrarListaItensEmprestimo(livros, emprestimo);
 

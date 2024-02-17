@@ -5,7 +5,7 @@ import com.sistemabibilioteca.sistemabibilioteca.model.Livro;
 import java.util.List;
 
 public interface LivroDAO {
-    Livro findById(String id);
+    Livro BuscaPorId(String id);
     List<Livro> findAll();
-    Livro save(Livro livro);
+    Livro cadastraLivro(Livro livro);
 }

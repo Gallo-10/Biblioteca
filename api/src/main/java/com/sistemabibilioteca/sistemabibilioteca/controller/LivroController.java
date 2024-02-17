@@ -23,6 +23,6 @@ public class LivroController {
 
     @PostMapping
     public Livro cadastrarLivro(Livro livro) {
-        return livroDAO.save(livro);
+        return livroDAO.cadastraLivro(livro);
     }
 }

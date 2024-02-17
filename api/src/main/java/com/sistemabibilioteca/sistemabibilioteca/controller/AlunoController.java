@@ -22,7 +22,7 @@ public class AlunoController {
 
     @GetMapping("/{matricula}")
     public Aluno listarPorMatricula(String matricula) {
-        return alunoDAO.findByMatricula(matricula);
+        return alunoDAO.BuscaPorMatricula(matricula);
     }
 
     @PostMapping
@@ -30,6 +30,6 @@ public class AlunoController {
         if (aluno.getMatricula().isEmpty() || aluno.getNome().isEmpty() || aluno.getCpf().isEmpty() || aluno.getEndereco().isEmpty()) {
             throw new RuntimeException("Dados inválidos");
         }
-        return alunoDAO.save(aluno);
+        return alunoDAO.cadastraAluno(aluno);
     }
 }

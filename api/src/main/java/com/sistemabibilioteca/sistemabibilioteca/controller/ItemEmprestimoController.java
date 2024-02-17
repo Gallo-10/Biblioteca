@@ -26,12 +26,12 @@ public class ItemEmprestimoController {
     }
 
     public ItemEmprestimo cadastrarItemEmprestimo(ItemEmprestimo itemEmprestimo) {
-        return itemEmprestimoDAO.save(itemEmprestimo);
+        return itemEmprestimoDAO.cadastraItemEmprestimo(itemEmprestimo);
     }
 
     public void verificarLivros(List<Livro> livros) {
         for (Livro livro : livros) {
-            if (itemEmprestimoDAO.findByLivro(livro.getId())) { 
+            if (itemEmprestimoDAO.BuscaPorLivro(livro.getId())) { 
                 throw new RuntimeException("Livro já reservado");
             }
             if (livro.isExemplarBiblioteca()) {

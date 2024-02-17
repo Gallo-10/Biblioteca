@@ -14,14 +14,14 @@ public class TituloRepository implements TituloDAO {
     @Autowired
     private EntityManager entityManager;
     @Override
-    public Titulo findById(Long id) {
+    public Titulo BuscaPorId(Long id) {
         return entityManager.createQuery("SELECT a FROM titulos a WHERE a.id = :id", Titulo.class)
                             .setParameter("id", id)
                             .getSingleResult();
     }
 
     @Override
-    public Titulo findByIsbn(String isbn) {
+    public Titulo BuscaPorIsbn(String isbn) {
         return entityManager.createQuery("SELECT a FROM titulos a WHERE a.isbn = :isbn", Titulo.class)
                             .setParameter("isbn", isbn)
                             .getSingleResult();
@@ -34,7 +34,7 @@ public class TituloRepository implements TituloDAO {
 
     @Transactional
     @Override
-    public Titulo save(Titulo titulo) {
+    public Titulo cadastraTitulo(Titulo titulo) {
         entityManager.persist(titulo);
         return titulo;
     }

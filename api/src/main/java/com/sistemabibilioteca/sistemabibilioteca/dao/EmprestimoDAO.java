@@ -4,9 +4,9 @@ import java.util.List;
 import com.sistemabibilioteca.sistemabibilioteca.model.Emprestimo;
 
 public interface EmprestimoDAO {
-    Emprestimo findById(Long id);
-    Emprestimo findByAlunoMatricula(String matricula);
+    Emprestimo BuscaPorId(Long id);
+    Emprestimo BuscaPorAlunoMatricula(String matricula);
     List<Emprestimo> findAll();
-    Emprestimo save(Emprestimo emprestimo);
+    Emprestimo cadastraEmprestimo(Emprestimo emprestimo);
 
 }

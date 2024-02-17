@@ -15,21 +15,21 @@ public class AlunoRepository implements AlunoDAO{
     private EntityManager entityManager;
 
     @Override
-    public Aluno findByMatricula(String matricula) {
+    public Aluno BuscaPorMatricula(String matricula) {
         return entityManager.createQuery("SELECT a FROM aluno a WHERE a.matricula = :matricula", Aluno.class)
                             .setParameter("matricula", matricula)
                             .getSingleResult();
     }
 
     @Override
-    public Aluno findByCpf(String cpf) {
+    public Aluno BuscaPorCpf(String cpf) {
         return entityManager.createQuery("SELECT a FROM aluno a WHERE a.cpf = :cpf", Aluno.class)
         .setParameter("cpf", cpf)
         .getSingleResult();
     }
 
     @Override
-    public Aluno findByNome(String nome) {
+    public Aluno BuscaPorNome(String nome) {
         return entityManager.createQuery("SELECT a FROM aluno a WHERE a.nome = :nome", Aluno.class)
                             .setParameter("nome", nome)
                             .getSingleResult();
@@ -42,7 +42,7 @@ public class AlunoRepository implements AlunoDAO{
 
     @Transactional
     @Override
-    public Aluno save(Aluno aluno) {
+    public Aluno cadastraAluno(Aluno aluno) {
         entityManager.persist(aluno);
         return aluno;
     }

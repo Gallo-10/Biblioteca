@@ -16,7 +16,7 @@ public class LivroRepository implements LivroDAO {
     private EntityManager entityManager;
 
     @Override
-    public Livro findById(String id) {
+    public Livro BuscaPorId(String id) {
         return entityManager.createQuery("SELECT a FROM livros a WHERE a.id = :id", Livro.class)
                             .setParameter("id", id)
                             .getSingleResult();
@@ -29,7 +29,7 @@ public class LivroRepository implements LivroDAO {
 
     @Transactional
     @Override
-    public Livro save(Livro livro) {
+    public Livro cadastraLivro(Livro livro) {
         entityManager.persist(livro);
         return livro;
     }
