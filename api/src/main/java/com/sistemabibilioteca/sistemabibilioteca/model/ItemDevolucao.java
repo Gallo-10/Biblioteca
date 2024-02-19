@@ -21,6 +21,7 @@ public class ItemDevolucao {
     private int diasAtraso;
     private float valor;
     private float multa;
+    
     @ManyToOne
     @JoinColumn(name = "livro_id", referencedColumnName = "id")
     private Livro livro;

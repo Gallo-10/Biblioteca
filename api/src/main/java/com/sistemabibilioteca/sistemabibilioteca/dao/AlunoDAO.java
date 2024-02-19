@@ -16,5 +16,5 @@ public interface AlunoDAO {
 
     List<Aluno> findAll();// metodo pra listar todos alunos
 
-    Aluno cadastraAluno(Aluno aluno);// metodo pra cadastrar aluno
+    Aluno cadastraAluno(String matricula, String nome, String cpf, String endereco);// metodo pra cadastrar aluno
 }

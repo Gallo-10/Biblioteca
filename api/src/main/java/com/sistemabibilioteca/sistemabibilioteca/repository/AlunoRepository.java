@@ -42,7 +42,13 @@ public class AlunoRepository implements AlunoDAO{
 
     @Transactional
     @Override
-    public Aluno cadastraAluno(Aluno aluno) {
+    public Aluno cadastraAluno(String matricula, String nome, String cpf, String endereco) {
+        Aluno aluno = new Aluno();
+        aluno.setMatricula(matricula);
+        aluno.setNome(nome);
+        aluno.setCpf(cpf);
+        aluno.setEndereco(endereco);
+    
         entityManager.persist(aluno);
         return aluno;
     }

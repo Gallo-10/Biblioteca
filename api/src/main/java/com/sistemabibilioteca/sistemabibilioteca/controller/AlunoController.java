@@ -25,11 +25,8 @@ public class AlunoController {
         return alunoDAO.BuscaPorMatricula(matricula);
     }
 
-    @PostMapping
-    public Aluno cadastrarAluno(Aluno aluno) {
-        if (aluno.getMatricula().isEmpty() || aluno.getNome().isEmpty() || aluno.getCpf().isEmpty() || aluno.getEndereco().isEmpty()) {
-            throw new RuntimeException("Dados inválidos");
-        }
-        return alunoDAO.cadastraAluno(aluno);
+    @PostMapping("/cadastroAluno")
+    public Aluno cadastrarAluno(String matricula, String nome, String cpf, String endereco) {
+        return alunoDAO.cadastraAluno(matricula,nome,cpf,endereco);
     }
 }

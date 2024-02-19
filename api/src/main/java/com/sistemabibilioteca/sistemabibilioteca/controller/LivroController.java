@@ -21,7 +21,7 @@ public class LivroController {
         return livroDAO.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/cadastroLivro")
     public Livro cadastrarLivro(Livro livro) {
         return livroDAO.cadastraLivro(livro);
     }

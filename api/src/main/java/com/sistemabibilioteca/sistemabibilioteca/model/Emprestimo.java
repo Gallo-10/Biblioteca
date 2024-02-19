@@ -20,6 +20,7 @@ public class Emprestimo {
     private Long id;
     private Date dataEmprestimo;
     private Date dataPrevista;
+    
     @OneToOne
     @Nullable
     private Devolucao devolucao;

@@ -22,6 +22,7 @@ public class Devolucao {
     private boolean atraso;
     private float valorTotal;
     private float multa;
+
     @OneToMany
-    private List<ItemDevolucao> itensDevolucao;
+    private List<ItemDevolucao> itensDevolucao; //ligando a itemDevolucao
 }

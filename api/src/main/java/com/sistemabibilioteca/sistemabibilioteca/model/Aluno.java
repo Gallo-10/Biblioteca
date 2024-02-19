@@ -16,8 +16,9 @@ import lombok.Setter;
 @Setter
 
 public class Aluno {
-    @Id
+
     @Column(unique = true)
+    @Id
     private String matricula;
 
     private String nome;

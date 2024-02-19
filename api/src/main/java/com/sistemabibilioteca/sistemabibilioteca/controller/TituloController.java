@@ -20,7 +20,7 @@ public class TituloController {
         return tituloDAO.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/cadastroTitulo")
     public Titulo cadastrarTitulo(Titulo titulo) {
         return tituloDAO.cadastraTitulo(titulo);
     }
