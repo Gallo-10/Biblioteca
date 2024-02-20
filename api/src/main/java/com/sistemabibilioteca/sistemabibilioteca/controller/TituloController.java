@@ -21,7 +21,7 @@ public class TituloController {
     }
 
     @PostMapping("/cadastroTitulo")
-    public Titulo cadastrarTitulo(Titulo titulo) {
-        return tituloDAO.cadastraTitulo(titulo);
+    public Titulo cadastrarTitulo(int prazo,String isbn,String editora) {
+        return tituloDAO.cadastraTitulo(prazo,isbn,editora);
     }
 }

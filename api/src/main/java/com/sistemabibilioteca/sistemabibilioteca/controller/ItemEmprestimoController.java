@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,29 +29,25 @@ public class ItemEmprestimoController {
         return itemEmprestimoDAO.cadastraItemEmprestimo(itemEmprestimo);
     }
 
-    public void verificarLivros(List<Livro> livros) {
-        for (Livro livro : livros) {
-            if (itemEmprestimoDAO.BuscaPorLivro(livro.getId())) { 
-                throw new RuntimeException("Livro já reservado");
-            }
-            if (livro.isExemplarBiblioteca()) {
-                throw new RuntimeException("Livro é exemplar da biblioteca e não pode ser emprestado");
-            }
+    public void verificarLivro(Livro livro) {
+        if (itemEmprestimoDAO.BuscaPorLivro(livro.getId())) { 
+            throw new RuntimeException("Livro já reservado");
+        }
+        if (livro.isExemplarBiblioteca()) {
+            throw new RuntimeException("Livro é exemplar da biblioteca e não pode ser emprestado");
         }
     }
+    
 
 
     @SuppressWarnings("deprecation")
-    public List<ItemEmprestimo> cadastrarListaItensEmprestimo(List<Livro> livros, Emprestimo emprestimo) {
-        List<ItemEmprestimo> itensEmprestimo = new ArrayList<>();
-        for (Livro livro : livros) {
-            ItemEmprestimo itemEmprestimo = new ItemEmprestimo();
-            itemEmprestimo.setDataPrevista(new Date(2024, Calendar.JANUARY, 2));
-            itemEmprestimo.setLivro(livro);
-            itemEmprestimo.setEmprestimo(emprestimo);
-            cadastrarItemEmprestimo(itemEmprestimo);
-            itensEmprestimo.add(itemEmprestimo);
-        }
-        return itensEmprestimo;
+    public ItemEmprestimo cadastrarItemEmprestimo(Livro livro, Emprestimo emprestimo) {
+        ItemEmprestimo itemEmprestimo = new ItemEmprestimo();
+        itemEmprestimo.setDataPrevista(new Date(2024, Calendar.JANUARY, 2));
+        itemEmprestimo.setLivro(livro);
+        itemEmprestimo.setEmprestimo(emprestimo);
+        cadastrarItemEmprestimo(itemEmprestimo);
+        return itemEmprestimo;
     }
+    
 }

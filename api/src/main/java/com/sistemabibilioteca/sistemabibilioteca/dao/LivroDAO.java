@@ -7,5 +7,5 @@ import java.util.List;
 public interface LivroDAO {
     Livro BuscaPorId(String id);
     List<Livro> findAll();
-    Livro cadastraLivro(Livro livro);
+    Livro cadastraLivro(boolean disponivel,boolean exemplarBiblioteca,int prazo,String isbn,String editora);
 }

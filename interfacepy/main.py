@@ -1,64 +1,159 @@
 import requests
+from tkinter import *
 
-def cadastrarAluno(m,n,c,e):
+def cadastrarAluno():
+    m = matricula_entry.get()
+    n = nome_entry.get()
+    c = cpf_entry.get()
+    e = endereco_entry.get()
+
     url = "http://localhost:8080/api/aluno/cadastroAluno"
-
     PARAMS = {'matricula': m, 'nome': n, 'cpf': c, 'endereco': e}
-
     response = requests.post(url, params=PARAMS)
 
     if response.status_code == 200:
         print("Aluno cadastrado com sucesso!")
+        aluno_cadastro_window.destroy()
     else:
         print(f"Erro ao cadastrar aluno: {response.status_code}")
 
-def cadastrarLivro(d,e,p,tid,i,ed):
-    url1 = "http://localhost:8080/api/livro/cadastroLivro"
-    url2 = "http://localhost:8080/api/titulo/cadastroTitulo"
+def cadastrarLivro():
+    d = disponivel_entry.get()
+    e = exemplar_entry.get()
+    p = prazo_entry.get()
+    i = isbn_entry.get()
+    ed = editora_entry.get()
 
-    PARAMS1 = {'disponivel': d, 'exemplarBibilioteca': e,'titulo_id': tid}
-    PARAMS2 = {'prazo': p, 'isbn': i, 'editora': ed}
+    d = True if d.lower() == 's' else False
+    e = True if e.lower() == 's' else False
+    p = int(p) if p else None
 
-    response1 = requests.post(url1, params=PARAMS1)
-    response2 = requests.post(url2, params=PARAMS2)
+    url = "http://localhost:8080/api/livro/cadastroLivro"
+    PARAMS = {'disponivel': d, 'exemplarBiblioteca': e, 'prazo': p, 'isbn': i, 'editora': ed}
+    response = requests.post(url, params=PARAMS)
 
-    if response1.status_code == 200 and response2.status_code == 200:
+    if response.status_code == 200:
         print("Livro cadastrado com sucesso!")
+        livro_cadastro_window.destroy()
     else:
-        print(f"Erro ao cadastrar aluno: {response1.status_code} {response2.status_code}")
+        print(f"Erro ao cadastrar livro: {response.status_code}")
+
+def verificaAluno():
+    m = matricula_entry.get()
+
+    url = f"http://localhost:8080/api/aluno/matricula?matricula={m}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        print("Aluno verificado com sucesso!")
+        openAlunoOptionsWindow()
+    else:
+        print(f"Erro ao verificar aluno: {response.status_code}")
+
+def listaLivros():
+    url = f"http://localhost:8080/api/livro"
+    response = requests.get(url)
+
+    if response.status_code == 200:  # Verifica se a requisição foi bem-sucedida
+        livros = response.json()  # Extrai os dados da resposta
+        livros_text.delete('1.0', END)
+        for livro in livros:
+            disponivel = 'Sim' if livro['disponivel'] else 'Não'
+            exemplarBiblioteca = 'Sim' if livro['exemplarBiblioteca'] else 'Não'
+            livros_text.insert(END, f"ID: {livro['id']}\n")
+            livros_text.insert(END, f"Disponível: {disponivel}\n")
+            livros_text.insert(END, f"Exemplar da Biblioteca: {exemplarBiblioteca}\n")
+            livros_text.insert(END, f"Editora: {livro['titulo']['editora']}\n")
+            livros_text.insert(END, f"Prazo de devolução: {livro['titulo']['prazo']} dias\n")
+            livros_text.insert(END, f"Isbn do livro: {livro['titulo']['isbn']}\n")
+            livros_text.insert(END, "------------------------\n")
+        return livros  # Retorna os dados
+    else:
+        print(f"Erro ao listar livros: {response.status_code}")
+        return None
+
+def openAlunoCadastroWindow():
+    global aluno_cadastro_window
+    aluno_cadastro_window = Toplevel(root)
+    aluno_cadastro_window.title("Cadastrar Aluno")
+
+    global matricula_entry, nome_entry, cpf_entry, endereco_entry
+    Label(aluno_cadastro_window, text="Matrícula").grid(row=0)
+    matricula_entry = Entry(aluno_cadastro_window)
+    matricula_entry.grid(row=0, column=1)
+
+    Label(aluno_cadastro_window, text="Nome").grid(row=1)
+    nome_entry = Entry(aluno_cadastro_window)
+    nome_entry.grid(row=1, column=1)
+
+    Label(aluno_cadastro_window, text="CPF").grid(row=2)
+    cpf_entry = Entry(aluno_cadastro_window)
+    cpf_entry.grid(row=2, column=1)
+
+    Label(aluno_cadastro_window, text="Endereço").grid(row=3)
+    endereco_entry = Entry(aluno_cadastro_window)
+    endereco_entry.grid(row=3, column=1)
+
+    Button(aluno_cadastro_window, text="Cadastrar Aluno", command=cadastrarAluno).grid(row=4, column=0)
+
+def openLivroCadastroWindow():
+    global livro_cadastro_window
+    livro_cadastro_window = Toplevel(root)
+    livro_cadastro_window.title("Cadastrar Livro")
+
+    global disponivel_entry, exemplar_entry, prazo_entry, isbn_entry, editora_entry
+    Label(livro_cadastro_window, text="Disponível").grid(row=0)
+    disponivel_entry = Entry(livro_cadastro_window)
+    disponivel_entry.grid(row=0, column=1)
+
+    Label(livro_cadastro_window, text="Exemplar da Biblioteca").grid(row=1)
+    exemplar_entry = Entry(livro_cadastro_window)
+    exemplar_entry.grid(row=1, column=1)
+
+    Label(livro_cadastro_window, text="Prazo").grid(row=2)
+    prazo_entry = Entry(livro_cadastro_window)
+    prazo_entry.grid(row=2, column=1)
+
+    Label(livro_cadastro_window, text="ISBN").grid(row=3)
+    isbn_entry = Entry(livro_cadastro_window)
+    isbn_entry.grid(row=3, column=1)
+
+    Label(livro_cadastro_window, text="Editora").grid(row=4)
+    editora_entry = Entry(livro_cadastro_window)
+    editora_entry.grid(row=4, column=1)
+
+    Button(livro_cadastro_window, text="Cadastrar Livro", command=cadastrarLivro).grid(row=5, column=0)
+
+def openAlunoWindow():
+    aluno_window = Toplevel(root)
+    aluno_window.title("Entrar como Aluno")
 
 
+    global matricula_entry
+    Label(aluno_window, text="Matrícula").grid(row=0)
+    matricula_entry = Entry(aluno_window)
+    matricula_entry.grid(row=0, column=1)
 
-print('---------Bem vindo a biblioteca!----------\n')
+    Button(aluno_window, text="Entrar", command=verificaAluno).grid(row=1, column=0)
 
+def openBibliotecarioWindow():
+    bibliotecario_window = Toplevel(root)
+    bibliotecario_window.title("Entrar como Bibliotecário")
 
-x=int(input("1-Entrar como aluno   2-Entrar como bibliotecario\n"))
+    Button(bibliotecario_window, text="Cadastrar Aluno", command=openAlunoCadastroWindow).grid(row=0, column=0)
+    Button(bibliotecario_window, text="Cadastrar Livro", command=openLivroCadastroWindow).grid(row=0, column=1)
 
-if x == 1: 
-    print('logar')
-if x == 2:
-    y=int(input('1-Cadastrar aluno     2-Cadastrar livro\n'))
-    if y == 1:
-        m = input("Insira a matricula do aluno: \n")
-        n = input("Insira o nome do aluno: \n")
-        c = input("Insira o cpf do aluno: \n")
-        e = input("Insira o endereco do aluno: \n")
-        cadastrarAluno(m,n,c,e)
-    if y == 2:
-        d = input("O livro esta disponivel? S ou N: \n")
-        if d == 'S':
-            d = True
-        else:
-            d = False
+def openAlunoOptionsWindow():
+    aluno_options_window = Toplevel(root)
+    aluno_options_window.title("Opções do Aluno")
 
-        e = input("O livro e um exemplar da bibilioteca? S ou N: \n")
-        if e == 'S':
-            e = True
-        else:
-            e = False
-        tid = int(input("Titulo id?:\n"))
-        p = int(input("Qual o prazo de devolucao do livro em dias?"))
-        i = input("Qual o isbn do livro?: \n")
-        ed = input("Qual a editora do livro?: \n")
+    global livros_text
+    Button(aluno_options_window, text="Listar Livros", command=listaLivros).grid(row=0, column=0)
 
-        cadastrarLivro(d,e,p,tid,i,ed)
+    livros_text = Text(aluno_options_window, height=10, width=50)
+    livros_text.grid(row=1, column=0, columnspan=3)
+
+root = Tk()
+Button(root, text="Entrar como Aluno", command=openAlunoWindow).grid(row=0, column=0, padx=20)
+Button(root, text="Entrar como Bibliotecário", command=openBibliotecarioWindow).grid(row=0, column=1, padx=20)
+root.mainloop()

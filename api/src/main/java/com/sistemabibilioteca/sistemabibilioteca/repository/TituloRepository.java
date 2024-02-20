@@ -1,6 +1,7 @@
 package com.sistemabibilioteca.sistemabibilioteca.repository;
 
 import com.sistemabibilioteca.sistemabibilioteca.dao.TituloDAO;
+
 import com.sistemabibilioteca.sistemabibilioteca.model.Titulo;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -34,7 +35,11 @@ public class TituloRepository implements TituloDAO {
 
     @Transactional
     @Override
-    public Titulo cadastraTitulo(Titulo titulo) {
+    public Titulo cadastraTitulo(int prazo,String isbn,String editora) {
+        Titulo titulo = new Titulo();
+        titulo.setPrazo(prazo);
+        titulo.setIsbn(isbn);
+        titulo.setEditora(editora);
         entityManager.persist(titulo);
         return titulo;
     }

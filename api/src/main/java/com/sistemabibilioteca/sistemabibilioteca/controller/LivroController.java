@@ -22,7 +22,7 @@ public class LivroController {
     }
 
     @PostMapping("/cadastroLivro")
-    public Livro cadastrarLivro(Livro livro) {
-        return livroDAO.cadastraLivro(livro);
+    public Livro cadastrarLivro(boolean disponivel,boolean exemplarBiblioteca,int prazo,String isbn,String editora) {
+        return livroDAO.cadastraLivro(disponivel,exemplarBiblioteca,prazo,isbn,editora);
     }
 }

@@ -21,5 +21,4 @@ public class Livro {
     @ManyToOne
     @JoinColumn(name = "titulo_id", referencedColumnName = "id")
     private Titulo titulo;
-
 }

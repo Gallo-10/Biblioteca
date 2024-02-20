@@ -7,6 +7,7 @@ import com.sistemabibilioteca.sistemabibilioteca.model.Livro;
 import com.sistemabibilioteca.sistemabibilioteca.repository.AlunoRepository;
 import com.sistemabibilioteca.sistemabibilioteca.repository.EmprestimoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,9 +34,9 @@ public class EmprestimoController{
         return emprestimoDAO.findAll();
     }
 
-    @SuppressWarnings("deprecation")
-    
-    public Emprestimo cadastrarEmprestimo(String matricula, Date dataEmprestimo, List<Livro> livros ) {
+    @PostMapping("/cadastrarEmprestimo")
+    public Emprestimo cadastrarEmprestimo(String matricula, Date dataEmprestimo, Livro livros ) {
+
         //verifica se o aluno está cadastrado
         Aluno aluno = alunoRepository.BuscaPorMatricula(matricula);
         if (aluno == null) {
@@ -48,18 +49,20 @@ public class EmprestimoController{
             throw new RuntimeException("O aluno possui débitos pendentes");
         }
 
-        itemEmprestimoController.verificarLivros(livros);
+        itemEmprestimoController.verificarLivro(livros);
 
         //cria emprestimo
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setDataEmprestimo(dataEmprestimo);
-        emprestimo.setDataPrevista(new Date(2024,10,1));
+        emprestimo.setDataPrevista(new Date());
         emprestimo.setDevolucao(null);
-        emprestimo.setAluno(aluno);
-
         emprestimoDAO.cadastraEmprestimo(emprestimo);
 
-        itemEmprestimoController.cadastrarListaItensEmprestimo(livros, emprestimo);
+        emprestimo.setAluno(aluno);
+
+        
+
+        itemEmprestimoController.cadastrarItemEmprestimo(livros, emprestimo);
 
         return emprestimo;   
     }

@@ -20,8 +20,9 @@ public class AlunoController {
         return alunoDAO.findAll();
     }
 
-    @GetMapping("/{matricula}")
+    @GetMapping("/matricula")
     public Aluno listarPorMatricula(String matricula) {
+        System.out.println(matricula);
         return alunoDAO.BuscaPorMatricula(matricula);
     }
 
